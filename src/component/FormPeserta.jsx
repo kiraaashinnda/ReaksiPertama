@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 const FormPeserta = ({ onSimpan, onCancel, pesertaEdit }) => {
   const [nama, setNama] = useState("");
   const [jurusan, setJurusan] = useState("");
+  const [error, setError] = useState("");
 
 useEffect (() => {
   if (pesertaEdit) {
@@ -15,7 +16,10 @@ useEffect (() => {
 
   const handleSimpan = (e) => {
     e.preventDefault()
- 
+    if (!nama.trim() || !jurusan.trim()) {
+      setError("Gada Isi nya woi")
+      return
+    }
     onSimpan({
       id: pesertaEdit? pesertaEdit.id : Date.now(),
       nama,
@@ -34,6 +38,9 @@ return (
       Simpan
     </button>
     </div>
+
+  {error && <p>{error}</p>}
+
   </form>
 )
 
